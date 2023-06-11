@@ -1,8 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 //
-import "react-dates/initialize";
-import "react-dates/lib/css/_datepicker.css";
 import "rc-slider/assets/index.css";
 // STYLE
 import "./styles/index.scss";

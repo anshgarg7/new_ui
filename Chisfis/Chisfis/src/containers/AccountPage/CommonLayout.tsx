@@ -16,7 +16,7 @@ const CommonLayout: FC<CommonLayoutProps> = ({ children }) => {
               to="/account"
               className={({ isActive }) =>
                 `block py-5 md:py-8 border-b-2 flex-shrink-0 ${
-                  isActive ? "border-transparent" : "border-primary-500"
+                  !isActive ? "border-transparent" : "border-primary-500"
                 }`
               }
             >
@@ -26,7 +26,7 @@ const CommonLayout: FC<CommonLayoutProps> = ({ children }) => {
               to="/account-savelists"
               className={({ isActive }) =>
                 `block py-5 md:py-8 border-b-2 flex-shrink-0 ${
-                  isActive ? "border-transparent" : "border-primary-500"
+                  !isActive ? "border-transparent" : "border-primary-500"
                 }`
               }
             >
@@ -36,7 +36,7 @@ const CommonLayout: FC<CommonLayoutProps> = ({ children }) => {
               to="/account-password"
               className={({ isActive }) =>
                 `block py-5 md:py-8 border-b-2 flex-shrink-0 ${
-                  isActive ? "border-transparent" : "border-primary-500"
+                  !isActive ? "border-transparent" : "border-primary-500"
                 }`
               }
             >
@@ -46,7 +46,7 @@ const CommonLayout: FC<CommonLayoutProps> = ({ children }) => {
               to="/account-billing"
               className={({ isActive }) =>
                 `block py-5 md:py-8 border-b-2 flex-shrink-0 ${
-                  isActive ? "border-transparent" : "border-primary-500"
+                  !isActive ? "border-transparent" : "border-primary-500"
                 }`
               }
             >

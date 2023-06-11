@@ -91,7 +91,7 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
       </div>
       <div className="lg:p-10 lg:bg-neutral-50 lg:dark:bg-black/20 grid grid-cols-1 gap-6  rounded-3xl">
         {DEMO_DATA.map((item, index) => (
-          <FlightCard key={index} data={item} />
+          <FlightCard defaultOpen={!index} key={index} data={item} />
         ))}
 
         <div className="flex mt-12 justify-center items-center">

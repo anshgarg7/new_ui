@@ -11,9 +11,7 @@ import PropertyCardH from "components/PropertyCardH/PropertyCardH";
 
 const DEMO_EXPERIENCES = DEMO_STAY_LISTINGS.filter((_, i) => i < 12);
 
-export interface SectionGridHasMapProps {}
-
-const SectionGridHasMap: FC<SectionGridHasMapProps> = () => {
+const SectionGridHasMap: FC<{}> = () => {
   const [currentHoverID, setCurrentHoverID] = useState<string | number>(-1);
   const [showFullMapFixed, setShowFullMapFixed] = useState(false);
 
@@ -92,13 +90,7 @@ const SectionGridHasMap: FC<SectionGridHasMapProps> = () => {
               defaultCenter={DEMO_EXPERIENCES[0].map}
             >
               {DEMO_EXPERIENCES.map((item) => (
-                <AnyReactComponent
-                  isSelected={currentHoverID === item.id}
-                  key={item.id}
-                  lat={item.map.lat}
-                  lng={item.map.lng}
-                  experiences={item}
-                />
+                <div></div>
               ))}
             </GoogleMapReact>
           </div>

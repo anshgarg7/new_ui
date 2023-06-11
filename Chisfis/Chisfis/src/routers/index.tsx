@@ -9,11 +9,8 @@ import ListingStayPage from "containers/ListingStayPage/ListingStayPage";
 import ListingStayMapPage from "containers/ListingStayPage/ListingStayMapPage";
 import ListingExperiencesPage from "containers/ListingExperiencesPage/ListingExperiencesPage";
 import ListingExperiencesMapPage from "containers/ListingExperiencesPage/ListingExperiencesMapPage";
-import ListingStayDetailPage from "containers/ListingDetailPage/ListingStayDetailPage";
-import ListingExperiencesDetailPage from "containers/ListingDetailPage/ListingExperiencesDetailPage";
 import ListingCarPage from "containers/ListingCarPage/ListingCarPage";
 import ListingCarMapPage from "containers/ListingCarPage/ListingCarMapPage";
-import ListingCarDetailPage from "containers/ListingDetailPage/ListingCarDetailPage";
 import CheckOutPage from "containers/CheckOutPage/CheckOutPage";
 import PayPage from "containers/PayPage/PayPage";
 import AuthorPage from "containers/AuthorPage/AuthorPage";
@@ -46,6 +43,9 @@ import ListingFlightsPage from "containers/ListingFlightsPage/ListingFlightsPage
 import FooterNav from "components/FooterNav";
 import useWindowSize from "hooks/useWindowResize";
 import PageHome3 from "containers/PageHome/PageHome3";
+import ListingStayDetailPage from "containers/ListingDetailPage/listing-stay-detail/ListingStayDetailPage";
+import ListingCarDetailPage from "containers/ListingDetailPage/listing-car-detail/ListingCarDetailPage";
+import ListingExperiencesDetailPage from "containers/ListingDetailPage/listing-experiences-detail/ListingExperiencesDetailPage";
 
 export const pages: Page[] = [
   { path: "/", exact: true, component: PageHome },
@@ -112,11 +112,13 @@ export const pages: Page[] = [
 ];
 
 const MyRoutes = () => {
-  const WIN_WIDTH = useWindowSize().width || window.innerWidth;
+  let WIN_WIDTH = useWindowSize().width;
+  if (typeof window !== "undefined") {
+    WIN_WIDTH = WIN_WIDTH || window.innerWidth;
+  }
+
   return (
-    <BrowserRouter
-      basename={process.env.NODE_ENV === "production" ? "chisfis" : ""}
-    >
+    <BrowserRouter>
       <ScrollToTop />
       <SiteHeader />
 

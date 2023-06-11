@@ -1,24 +1,14 @@
+import React, { FC, Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import GuestsInput, {
-  GuestsObject,
-} from "components/HeroSearchForm2Mobile/GuestsInput";
-import React, { FC, Fragment, useState } from "react";
+import GuestsInput from "./HeroSearchForm2Mobile/GuestsInput";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 
 interface ModalSelectGuestsProps {
-  onClose?: () => void;
-  onChangeGuests: (date: GuestsObject) => void;
-  defaultValue: GuestsObject;
   renderChildren?: (p: { openModal: () => void }) => React.ReactNode;
 }
 
-const ModalSelectGuests: FC<ModalSelectGuestsProps> = ({
-  defaultValue,
-  onClose,
-  onChangeGuests,
-  renderChildren,
-}) => {
+const ModalSelectGuests: FC<ModalSelectGuestsProps> = ({ renderChildren }) => {
   const [showModal, setShowModal] = useState(false);
 
   // FOR RESET ALL DATA WHEN CLICK CLEAR BUTTON
@@ -76,10 +66,7 @@ const ModalSelectGuests: FC<ModalSelectGuestsProps> = ({
                           <div
                             className={`flex-1 relative flex z-10 overflow-hidden`}
                           >
-                            <GuestsInput
-                              defaultValue={defaultValue}
-                              onChange={onChangeGuests}
-                            />
+                            <GuestsInput />
                           </div>
                         </div>
                       </div>
@@ -88,13 +75,7 @@ const ModalSelectGuests: FC<ModalSelectGuestsProps> = ({
                       <button
                         type="button"
                         className="underline font-semibold flex-shrink-0"
-                        onClick={() => {
-                          onChangeGuests({
-                            guestAdults: 0,
-                            guestChildren: 0,
-                            guestInfants: 0,
-                          });
-                        }}
+                        onClick={() => {}}
                       >
                         Clear data
                       </button>

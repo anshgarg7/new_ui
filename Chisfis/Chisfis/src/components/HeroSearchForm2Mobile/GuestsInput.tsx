@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { GuestsObject } from "components/HeroSearchForm/type";
 import NcInputNumber from "components/NcInputNumber/NcInputNumber";
+import React, { useEffect, useState } from "react";
 import { FC } from "react";
-
-export interface GuestsObject {
-  guestAdults?: number;
-  guestChildren?: number;
-  guestInfants?: number;
-}
 export interface GuestsInputProps {
-  defaultValue: GuestsObject;
+  defaultValue?: GuestsObject;
   onChange?: (data: GuestsObject) => void;
   className?: string;
 }
@@ -19,24 +14,24 @@ const GuestsInput: FC<GuestsInputProps> = ({
   className = "",
 }) => {
   const [guestAdultsInputValue, setGuestAdultsInputValue] = useState(
-    defaultValue.guestAdults || 0
+    defaultValue?.guestAdults || 0
   );
   const [guestChildrenInputValue, setGuestChildrenInputValue] = useState(
-    defaultValue.guestChildren || 0
+    defaultValue?.guestChildren || 0
   );
   const [guestInfantsInputValue, setGuestInfantsInputValue] = useState(
-    defaultValue.guestInfants || 0
+    defaultValue?.guestInfants || 0
   );
 
   useEffect(() => {
-    setGuestAdultsInputValue(defaultValue.guestAdults || 0);
-  }, [defaultValue.guestAdults]);
+    setGuestAdultsInputValue(defaultValue?.guestAdults || 0);
+  }, [defaultValue?.guestAdults]);
   useEffect(() => {
-    setGuestChildrenInputValue(defaultValue.guestChildren || 0);
-  }, [defaultValue.guestChildren]);
+    setGuestChildrenInputValue(defaultValue?.guestChildren || 0);
+  }, [defaultValue?.guestChildren]);
   useEffect(() => {
-    setGuestInfantsInputValue(defaultValue.guestInfants || 0);
-  }, [defaultValue.guestInfants]);
+    setGuestInfantsInputValue(defaultValue?.guestInfants || 0);
+  }, [defaultValue?.guestInfants]);
 
   const handleChangeData = (value: number, type: keyof GuestsObject) => {
     let newValue = {
@@ -62,7 +57,7 @@ const GuestsInput: FC<GuestsInputProps> = ({
   return (
     <div className={`flex flex-col relative p-5 ${className}`}>
       <span className="mb-5 block font-semibold text-xl sm:text-2xl">
-        Who's coming?
+        {`Who's coming?`}
       </span>
       <NcInputNumber
         className="w-full"

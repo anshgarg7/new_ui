@@ -1,16 +1,19 @@
-import { DateRage } from "components/HeroSearchForm/StaySearchForm";
+import { DateRage } from "components/HeroSearchForm/type";
 
-const converSelectedDateToString = ({ startDate, endDate }: DateRage) => {
-  const startDateString = startDate?.format("MMM DD");
-  const endDateString =
-    endDate?.get("month") !== startDate?.get("month")
-      ? endDate?.format("MMM DD")
-      : endDate?.format("DD");
-  const dateSelectedString =
-    startDateString && endDateString
-      ? `${startDateString} - ${endDateString}`
-      : `${startDateString || endDateString || ""}`;
-  return dateSelectedString;
+const converSelectedDateToString = ([startDate, endDate]: DateRage) => {
+  const dateString =
+    (startDate?.toLocaleDateString("en-US", {
+      month: "short",
+      day: "2-digit",
+    }) || "") +
+    (endDate
+      ? " - " +
+        endDate?.toLocaleDateString("en-US", {
+          month: "short",
+          day: "2-digit",
+        })
+      : "");
+  return dateString;
 };
 
 export default converSelectedDateToString;

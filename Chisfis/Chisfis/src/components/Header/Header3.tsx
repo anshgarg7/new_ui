@@ -1,16 +1,16 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import Logo from "shared/Logo/Logo";
 import useOutsideAlerter from "hooks/useOutsideAlerter";
-import HeroSearchForm, {
+import HeroSearchFormSmall, {
   SearchTab,
-} from "components/HeroSearchForm2/HeroSearchForm";
+} from "components/HeroSearchFormSmall/HeroSearchFormSmall";
 import { Link, useLocation } from "react-router-dom";
 import SwitchDarkMode from "shared/SwitchDarkMode/SwitchDarkMode";
 import NotifyDropdown from "./NotifyDropdown";
 import AvatarDropdown from "./AvatarDropdown";
 import MenuBar from "shared/MenuBar/MenuBar";
-import { StaySearchFormFields } from "components/HeroSearchForm2/StaySearchForm";
 import HeroSearchForm2MobileFactory from "components/HeroSearchForm2Mobile/HeroSearchForm2MobileFactory";
+import { StaySearchFormFields } from "components/HeroSearchForm/type";
 
 interface Header3Props {
   className?: string;
@@ -79,7 +79,7 @@ const Header3: FC<Header3Props> = ({ className = "" }) => {
         }`}
       >
         <div className={`w-full max-w-4xl mx-auto pb-6`}>
-          <HeroSearchForm
+          <HeroSearchFormSmall
             defaultFieldFocus={showHeroSearch || undefined}
             onTabChange={setCurrentTab}
             defaultTab={currentTab}

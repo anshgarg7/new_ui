@@ -27,10 +27,7 @@ const ListingRealEstateMapPage: FC<ListingRealEstateMapPageProps> = ({
   }, []);
 
   return (
-    <div
-      className={`nc-ListingRealEstateMapPage relative ${className}`}
-      data-nc-id="ListingRealEstateMapPage"
-    >
+    <div className={`nc-ListingRealEstateMapPage relative ${className}`}>
       <Helmet>
         <title>Chisfis || Booking React Template</title>
       </Helmet>

@@ -1,8 +1,10 @@
+"use client";
+
 import React, { FC, useState } from "react";
-import ExperiencesSearchForm from "./ExperiencesSearchForm";
-import StaySearchForm from "./StaySearchForm";
-import RentalCarSearchForm from "./RentalCarSearchForm";
-import FlightSearchForm from "./FlightSearchForm";
+import StaySearchForm from "./(stay-search-form)/StaySearchForm";
+import ExperiencesSearchForm from "./(experiences-search-form)/ExperiencesSearchForm";
+import RentalCarSearchForm from "./(car-search-form)/RentalCarSearchForm";
+import FlightSearchForm from "./(flight-search-form)/FlightSearchForm";
 
 export type SearchTab = "Stays" | "Experiences" | "Cars" | "Flights";
 
@@ -47,16 +49,15 @@ const HeroSearchForm: FC<HeroSearchFormProps> = ({
   };
 
   const renderForm = () => {
-    const isArchivePage = !!currentPage && !!currentTab;
     switch (tabActive) {
       case "Stays":
-        return <StaySearchForm haveDefaultValue={isArchivePage} />;
+        return <StaySearchForm />;
       case "Experiences":
-        return <ExperiencesSearchForm haveDefaultValue={isArchivePage} />;
+        return <ExperiencesSearchForm />;
       case "Cars":
-        return <RentalCarSearchForm haveDefaultValue={isArchivePage} />;
+        return <RentalCarSearchForm />;
       case "Flights":
-        return <FlightSearchForm haveDefaultValue={isArchivePage} />;
+        return <FlightSearchForm />;
 
       default:
         return null;
@@ -66,7 +67,6 @@ const HeroSearchForm: FC<HeroSearchFormProps> = ({
   return (
     <div
       className={`nc-HeroSearchForm w-full max-w-6xl py-5 lg:py-0 ${className}`}
-      data-nc-id="HeroSearchForm"
     >
       {renderTab()}
       {renderForm()}

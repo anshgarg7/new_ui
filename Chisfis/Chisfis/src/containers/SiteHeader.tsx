@@ -69,6 +69,9 @@ const SiteHeader = () => {
     if (location.pathname === "/home-2") {
       setHeaderSelected("Header 2");
     }
+    if (location.pathname === "/home-3") {
+      setHeaderSelected("Header 3");
+    }
     if (location.pathname === "/") {
       setHeaderSelected("Header 1");
     }

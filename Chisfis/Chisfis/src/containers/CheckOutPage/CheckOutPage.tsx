@@ -3,30 +3,28 @@ import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import React, { FC, Fragment, useState } from "react";
 import visaPng from "images/vis.png";
 import mastercardPng from "images/mastercard.svg";
-import Input from "shared/Input/Input";
-import Label from "components/Label/Label";
-import Textarea from "shared/Textarea/Textarea";
-import ButtonPrimary from "shared/Button/ButtonPrimary";
-import NcImage from "shared/NcImage/NcImage";
+import { GuestsObject } from "components/HeroSearchForm/type";
 import StartRating from "components/StartRating/StartRating";
 import NcModal from "shared/NcModal/NcModal";
 import ModalSelectDate from "components/ModalSelectDate";
-import moment from "moment";
-import { DateRage } from "components/HeroSearchForm/StaySearchForm";
 import converSelectedDateToString from "utils/converSelectedDateToString";
 import ModalSelectGuests from "components/ModalSelectGuests";
-import { GuestsObject } from "components/HeroSearchForm2Mobile/GuestsInput";
+import Label from "components/Label/Label";
+import Input from "shared/Input/Input";
+import Textarea from "shared/Textarea/Textarea";
+import ButtonPrimary from "shared/Button/ButtonPrimary";
 
-export interface CheckOutPageProps {
+export interface CheckOutPagePageMainProps {
   className?: string;
 }
 
-const CheckOutPage: FC<CheckOutPageProps> = ({ className = "" }) => {
-  const [rangeDates, setRangeDates] = useState<DateRage>({
-    startDate: moment().add(1, "day"),
-    endDate: moment().add(5, "days"),
-  });
-  const [guests, setGuests] = useState<GuestsObject>({
+const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
+  className = "",
+}) => {
+  const [startDate] = useState<Date | null>(new Date("2023/02/06"));
+  const [endDate] = useState<Date | null>(new Date("2023/02/23"));
+
+  const [guests] = useState<GuestsObject>({
     guestAdults: 2,
     guestChildren: 1,
     guestInfants: 1,
@@ -38,7 +36,12 @@ const CheckOutPage: FC<CheckOutPageProps> = ({ className = "" }) => {
         <div className="flex flex-col sm:flex-row sm:items-center">
           <div className="flex-shrink-0 w-full sm:w-40">
             <div className=" aspect-w-4 aspect-h-3 sm:aspect-h-4 rounded-2xl overflow-hidden">
-              <NcImage src="https://images.pexels.com/photos/6373478/pexels-photo-6373478.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
+              <img
+                alt=""
+                className="absolute inset-0 object-cover"
+                sizes="200px"
+                src="https://images.pexels.com/photos/6373478/pexels-photo-6373478.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+              />
             </div>
           </div>
           <div className="py-5 sm:px-5 space-y-3">
@@ -101,20 +104,18 @@ const CheckOutPage: FC<CheckOutPageProps> = ({ className = "" }) => {
               modalTitle="Booking details"
             />
           </div>
-          <div className="mt-6 border border-neutral-200 dark:border-neutral-700 rounded-3xl flex flex-col sm:flex-row divide-y sm:divide-x sm:divide-y-0 divide-neutral-200 dark:divide-neutral-700">
+          <div className="mt-6 border border-neutral-200 dark:border-neutral-700 rounded-3xl flex flex-col sm:flex-row divide-y sm:divide-x sm:divide-y-0 divide-neutral-200 dark:divide-neutral-700 overflow-hidden z-10">
             <ModalSelectDate
-              defaultValue={rangeDates}
-              onSelectDate={setRangeDates}
               renderChildren={({ openModal }) => (
                 <button
                   onClick={openModal}
-                  className="text-left flex-1 p-5 flex justify-between space-x-5 "
+                  className="text-left flex-1 p-5 flex justify-between space-x-5 hover:bg-neutral-50 dark:hover:bg-neutral-800"
                   type="button"
                 >
                   <div className="flex flex-col">
                     <span className="text-sm text-neutral-400">Date</span>
                     <span className="mt-1.5 text-lg font-semibold">
-                      {converSelectedDateToString(rangeDates)}
+                      {converSelectedDateToString([startDate, endDate])}
                     </span>
                   </div>
                   <PencilSquareIcon className="w-6 h-6 text-neutral-6000 dark:text-neutral-400" />
@@ -123,13 +124,11 @@ const CheckOutPage: FC<CheckOutPageProps> = ({ className = "" }) => {
             />
 
             <ModalSelectGuests
-              defaultValue={guests}
-              onChangeGuests={setGuests}
               renderChildren={({ openModal }) => (
                 <button
                   type="button"
                   onClick={openModal}
-                  className="text-left flex-1 p-5 flex justify-between space-x-5"
+                  className="text-left flex-1 p-5 flex justify-between space-x-5 hover:bg-neutral-50 dark:hover:bg-neutral-800"
                 >
                   <div className="flex flex-col">
                     <span className="text-sm text-neutral-400">Guests</span>
@@ -155,14 +154,14 @@ const CheckOutPage: FC<CheckOutPageProps> = ({ className = "" }) => {
 
           <div className="mt-6">
             <Tab.Group>
-              <Tab.List className="flex my-5">
+              <Tab.List className="flex my-5 gap-1">
                 <Tab as={Fragment}>
                   {({ selected }) => (
                     <button
                       className={`px-4 py-1.5 sm:px-6 sm:py-2.5 rounded-full focus:outline-none ${
                         selected
-                          ? "bg-neutral-800 dark:bg-neutral-300 text-white dark:text-neutral-900"
-                          : "text-neutral-6000 dark:text-neutral-400"
+                          ? "bg-neutral-800 dark:bg-neutral-200 text-white dark:text-neutral-900"
+                          : "text-neutral-6000 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800"
                       }`}
                     >
                       Paypal
@@ -174,13 +173,17 @@ const CheckOutPage: FC<CheckOutPageProps> = ({ className = "" }) => {
                     <button
                       className={`px-4 py-1.5 sm:px-6 sm:py-2.5  rounded-full flex items-center justify-center focus:outline-none  ${
                         selected
-                          ? "bg-neutral-800 dark:bg-neutral-300 text-white dark:text-neutral-900"
-                          : " text-neutral-6000 dark:text-neutral-400"
+                          ? "bg-neutral-800 dark:bg-neutral-200 text-white dark:text-neutral-900"
+                          : " text-neutral-6000 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800"
                       }`}
                     >
                       <span className="mr-2.5">Credit card</span>
-                      <img className="w-8" src={visaPng} alt="" />
-                      <img className="w-8" src={mastercardPng} alt="" />
+                      <img className="w-8" src={visaPng} alt="visa" />
+                      <img
+                        className="w-8"
+                        src={mastercardPng}
+                        alt="mastercard"
+                      />
                     </button>
                   )}
                 </Tab>
@@ -243,7 +246,7 @@ const CheckOutPage: FC<CheckOutPageProps> = ({ className = "" }) => {
   };
 
   return (
-    <div className={`nc-CheckOutPage ${className}`} data-nc-id="CheckOutPage">
+    <div className={`nc-CheckOutPagePageMain ${className}`}>
       <main className="container mt-11 mb-24 lg:mb-32 flex flex-col-reverse lg:flex-row">
         <div className="w-full lg:w-3/5 xl:w-2/3 lg:pr-10 ">{renderMain()}</div>
         <div className="hidden lg:block flex-grow">{renderSidebar()}</div>
@@ -252,4 +255,4 @@ const CheckOutPage: FC<CheckOutPageProps> = ({ className = "" }) => {
   );
 };
 
-export default CheckOutPage;
+export default CheckOutPagePageMain;

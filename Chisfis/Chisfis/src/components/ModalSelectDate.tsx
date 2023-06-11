@@ -1,39 +1,28 @@
+import DatePicker from "react-datepicker";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { DateRage } from "components/HeroSearchForm/StaySearchForm";
-import moment from "moment";
-import React, { FC, Fragment, useEffect, useState } from "react";
-import {
-  DayPickerRangeController,
-  FocusedInputShape,
-  isInclusivelyAfterDay,
-} from "react-dates";
+import React, { FC, Fragment, useState } from "react";
+import DatePickerCustomHeaderTwoMonth from "./DatePickerCustomHeaderTwoMonth";
+import DatePickerCustomDay from "./DatePickerCustomDay";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 
 interface ModalSelectDateProps {
-  onClose?: () => void;
-  onSelectDate: (date: DateRage) => void;
-  defaultValue: DateRage;
-  renderChildren?: (p: {
-    defaultValue: DateRage;
-    openModal: () => void;
-  }) => React.ReactNode;
+  renderChildren?: (p: { openModal: () => void }) => React.ReactNode;
 }
 
-const ModalSelectDate: FC<ModalSelectDateProps> = ({
-  defaultValue,
-  onClose,
-  onSelectDate,
-  renderChildren,
-}) => {
+const ModalSelectDate: FC<ModalSelectDateProps> = ({ renderChildren }) => {
   const [showModal, setShowModal] = useState(false);
-  const [stateDate, setStateDate] = useState(defaultValue);
-  const [focusedInputSectionCheckDate, setFocusedInputSectionCheckDate] =
-    useState<FocusedInputShape>("startDate");
 
-  useEffect(() => {
-    setStateDate(defaultValue);
-  }, [defaultValue]);
+  const [startDate, setStartDate] = useState<Date | null>(
+    new Date("2023/02/06")
+  );
+  const [endDate, setEndDate] = useState<Date | null>(new Date("2023/02/23"));
+
+  const onChangeDate = (dates: [Date | null, Date | null]) => {
+    const [start, end] = dates;
+    setStartDate(start);
+    setEndDate(end);
+  };
 
   // FOR RESET ALL DATA WHEN CLICK CLEAR BUTTON
   //
@@ -47,7 +36,7 @@ const ModalSelectDate: FC<ModalSelectDateProps> = ({
 
   const renderButtonOpenModal = () => {
     return renderChildren ? (
-      renderChildren({ defaultValue, openModal })
+      renderChildren({ openModal })
     ) : (
       <button onClick={openModal}>Select Date</button>
     );
@@ -84,38 +73,36 @@ const ModalSelectDate: FC<ModalSelectDateProps> = ({
                       </button>
                     </div>
 
-                    <div className="flex-1 pt-12 p-1 flex flex-col overflow-hidden">
-                      <div className="flex-1 flex flex-col overflow-hidden bg-white dark:bg-neutral-800">
+                    <div className="flex-1 pt-12 p-1 flex flex-col overflow-auto">
+                      <div className="flex-1 flex flex-col bg-white dark:bg-neutral-800">
                         <div className="flex-1 flex flex-col transition-opacity animate-[myblur_0.4s_ease-in-out] overflow-auto">
                           <div className="p-5 ">
                             <span className="block font-semibold text-xl sm:text-2xl">
-                              When's your trip?
+                              {` When's your trip?`}
                             </span>
                           </div>
-                          <div
-                            className={`flex-1 relative flex z-10 overflow-hidden`}
-                          >
-                            <DayPickerRangeController
-                              startDate={stateDate.startDate}
-                              endDate={stateDate.endDate}
-                              onDatesChange={(date) => {
-                                setStateDate(date);
-                                onSelectDate && onSelectDate(date);
-                              }}
-                              focusedInput={focusedInputSectionCheckDate}
-                              onFocusChange={(focusedInput) =>
-                                setFocusedInputSectionCheckDate(
-                                  focusedInput || "startDate"
-                                )
-                              }
-                              initialVisibleMonth={null}
-                              hideKeyboardShortcutsPanel={false}
-                              numberOfMonths={3}
-                              orientation="vertical"
-                              isOutsideRange={(day) =>
-                                !isInclusivelyAfterDay(day, moment())
-                              }
-                            />
+                          <div className="flex-1 relative flex z-10 ">
+                            <div className="overflow-hidden rounded-3xl ">
+                              <DatePicker
+                                selected={startDate}
+                                onChange={onChangeDate}
+                                startDate={startDate}
+                                endDate={endDate}
+                                selectsRange
+                                monthsShown={2}
+                                showPopperArrow={false}
+                                inline
+                                renderCustomHeader={(p) => (
+                                  <DatePickerCustomHeaderTwoMonth {...p} />
+                                )}
+                                renderDayContents={(day, date) => (
+                                  <DatePickerCustomDay
+                                    dayOfMonth={day}
+                                    date={date}
+                                  />
+                                )}
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -125,10 +112,7 @@ const ModalSelectDate: FC<ModalSelectDateProps> = ({
                         type="button"
                         className="underline font-semibold flex-shrink-0"
                         onClick={() => {
-                          setStateDate({
-                            startDate: moment(),
-                            endDate: moment().add(1, "days"),
-                          });
+                          onChangeDate([null, null]);
                         }}
                       >
                         Clear dates

@@ -1,44 +1,28 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
-import NcInputNumber from "components/NcInputNumber/NcInputNumber";
 import { FC } from "react";
 import ClearDataButton from "./ClearDataButton";
 import ButtonSubmit from "./ButtonSubmit";
-import { GuestsObject } from "components/HeroSearchForm2Mobile/GuestsInput";
-import { PathName } from "routers/types";
+import { UserPlusIcon } from "@heroicons/react/24/outline";
+import { GuestsObject } from "./type";
+import NcInputNumber from "components/NcInputNumber/NcInputNumber";
 
 export interface GuestsInputProps {
-  defaultValue: GuestsObject;
-  onChange?: (data: GuestsObject) => void;
   fieldClassName?: string;
   className?: string;
-  buttonSubmitHref?: PathName;
+  buttonSubmitHref?: string;
   hasButtonSubmit?: boolean;
 }
 
 const GuestsInput: FC<GuestsInputProps> = ({
-  defaultValue,
-  onChange,
   fieldClassName = "[ nc-hero-field-padding ]",
   className = "[ nc-flex-1 ]",
   buttonSubmitHref = "/listing-stay-map",
   hasButtonSubmit = true,
 }) => {
-  const [guestAdultsInputValue, setGuestAdultsInputValue] = useState(
-    defaultValue.guestAdults || 0
-  );
-  const [guestChildrenInputValue, setGuestChildrenInputValue] = useState(
-    defaultValue.guestChildren || 0
-  );
-  const [guestInfantsInputValue, setGuestInfantsInputValue] = useState(
-    defaultValue.guestInfants || 0
-  );
-
-  useEffect(() => {
-    setGuestAdultsInputValue(defaultValue.guestAdults || 0);
-    setGuestChildrenInputValue(defaultValue.guestChildren || 0);
-    setGuestInfantsInputValue(defaultValue.guestInfants || 0);
-  }, [defaultValue]);
+  const [guestAdultsInputValue, setGuestAdultsInputValue] = useState(2);
+  const [guestChildrenInputValue, setGuestChildrenInputValue] = useState(1);
+  const [guestInfantsInputValue, setGuestInfantsInputValue] = useState(1);
 
   const handleChangeData = (value: number, type: keyof GuestsObject) => {
     let newValue = {
@@ -58,7 +42,6 @@ const GuestsInput: FC<GuestsInputProps> = ({
       setGuestInfantsInputValue(value);
       newValue.guestInfants = value;
     }
-    onChange && onChange(newValue);
   };
 
   const totalGuests =
@@ -69,29 +52,16 @@ const GuestsInput: FC<GuestsInputProps> = ({
       {({ open }) => (
         <>
           <div
-            className={`flex-1 flex items-center focus:outline-none cursor-pointer ${
+            className={`flex-1 z-10 flex items-center focus:outline-none ${
               open ? "nc-hero-field-focused" : ""
             }`}
           >
             <Popover.Button
-              className={`flex-1 flex text-left items-center ${fieldClassName} space-x-3 `}
-              onClick={() => document.querySelector("html")?.click()}
+              className={`relative z-10 flex-1 flex text-left items-center ${fieldClassName} space-x-3 focus:outline-none`}
+              onClickCapture={() => document.querySelector("html")?.click()}
             >
               <div className="text-neutral-300 dark:text-neutral-400">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="nc-icon-field"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
-                  />
-                </svg>
+                <UserPlusIcon className="w-5 h-5 lg:w-7 lg:h-7" />
               </div>
               <div className="flex-grow">
                 <span className="block xl:text-lg font-semibold">
@@ -101,9 +71,7 @@ const GuestsInput: FC<GuestsInputProps> = ({
                   {totalGuests ? "Guests" : "Add guests"}
                 </span>
               </div>
-            </Popover.Button>
 
-            <div className="relative">
               {!!totalGuests && open && (
                 <ClearDataButton
                   onClick={() => {
@@ -113,7 +81,7 @@ const GuestsInput: FC<GuestsInputProps> = ({
                   }}
                 />
               )}
-            </div>
+            </Popover.Button>
 
             {/* BUTTON SUBMIT OF FORM */}
             {hasButtonSubmit && (
@@ -122,6 +90,10 @@ const GuestsInput: FC<GuestsInputProps> = ({
               </div>
             )}
           </div>
+
+          {open && (
+            <div className="h-8 absolute self-center top-1/2 -translate-y-1/2 z-0 -left-0.5 right-0 bg-white dark:bg-neutral-800"></div>
+          )}
           <Transition
             as={Fragment}
             enter="transition ease-out duration-200"

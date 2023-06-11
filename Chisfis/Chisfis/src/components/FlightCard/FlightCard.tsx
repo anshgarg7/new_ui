@@ -2,6 +2,7 @@ import React, { FC, useState } from "react";
 
 export interface FlightCardProps {
   className?: string;
+  defaultOpen?: boolean;
   data: {
     id: string;
     airlines: {
@@ -12,8 +13,12 @@ export interface FlightCardProps {
   };
 }
 
-const FlightCard: FC<FlightCardProps> = ({ className = "", data }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const FlightCard: FC<FlightCardProps> = ({
+  className = "",
+  data,
+  defaultOpen = false,
+}) => {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
 
   const renderDetailTop = () => {
     return (
